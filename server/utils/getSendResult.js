@@ -8,7 +8,7 @@ exports.getErr =  (err = "server internal error", errCode = 500)=> {
 exports.getResult =  (result)=> {
     return {
         code: 0,
-        msg: "",
+        msg: "ok",
         data: result,
     }
 }

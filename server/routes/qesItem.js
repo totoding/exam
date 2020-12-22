@@ -1,17 +1,18 @@
 const express = require("express")
 const router = express.Router()
-const qesBankServ = require("../services/qesBankServ")
+const qesItemServ = require("../services/qesItemServ")
 const {
     asyncHandler
 } = require("../utils/getSendResult")
-const jwt = require("../middleWare/jwt")
 
 
 router.post('/', asyncHandler(async (req, res) => {
-    const alreadyExist = await qesBankServ.checkQesBanKNameExist(req.body)
+
+    const result = await qesItemServ.AddQes(req.body)
+    return result
+    const alreadyExist = await qesBankServ.checkQesNameExist(req.body)
     if (!alreadyExist) {
-        const result = await qesBankServ.AddQesBank(req.body)
-        return result
+     
     } else {
         res.send({
             code: "-1",

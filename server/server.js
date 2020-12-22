@@ -11,6 +11,7 @@ app.use(require("./middleWare/tokenMiddleWare"))
 app.use("/api/whoami",require("./routes/whoami"))
 
 app.use("/api/qesBank", require("./routes/qesBank"))
+app.use("/api/qesItem", require("./routes/qesItem"))
 
 
 

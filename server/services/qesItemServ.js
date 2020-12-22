@@ -1,22 +1,50 @@
-const QuestionBank = require("../models/QuestionBank")
-const md5 = require("md5")
+const QuestionItem = require("../models/QuestionItem")
 const validate = require("validate.js")
-const { async } = require("validate.js")
-exports.AddQesBank = async ({bankName,bankType,itemPoint})=>{
+exports.AddQes = async (content)=>{
     const rule = {
-        bankName:{
+        questionContent:{
             presence: {
                 allowEmpty: false
             },
             type: "string"
         },
-        bankType:{
+        optionA:{
+            presence: {
+                allowEmpty: false
+            },
+            type : "string"
+        },
+        optionB:{
+            presence: {
+                allowEmpty: false
+            },
+            type : "string"
+        },
+        optionC:{
+            presence: {
+                allowEmpty: false
+            },
+            type : "string"
+        },
+        optionD:{
+            presence: {
+                allowEmpty: false
+            },
+            type : "string"
+        },
+        answer:{
+            presence: {
+                allowEmpty: false
+            },
+            type : "string"
+        },
+        point:{
             presence: {
                 allowEmpty: false
             },
             type : "number"
         },
-        itemPoint:{
+        bankId:{
             presence: {
                 allowEmpty: false
             },
@@ -24,8 +52,9 @@ exports.AddQesBank = async ({bankName,bankType,itemPoint})=>{
         },
 
     }
-    validate.validate({bankName,bankType,itemPoint},rule)
-    const resp = await QuestionBank.create({bankName,bankType,itemPoint})
+    validate.validate(content,rule)
+    const resp = await QuestionItem.create(content)
+    console.log(resp.toJSON())
     return resp.toJSON()
 }
 
