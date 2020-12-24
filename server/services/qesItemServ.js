@@ -1,97 +1,73 @@
 const QuestionItem = require("../models/QuestionItem")
 const validate = require("validate.js")
-exports.AddQes = async (content)=>{
-    const rule = {
-        questionContent:{
-            presence: {
-                allowEmpty: false
-            },
-            type: "string"
+const rule = {
+    questionContent:{
+        presence: {
+            allowEmpty: false
         },
-        optionA:{
-            presence: {
-                allowEmpty: false
-            },
-            type : "string"
+        type: "string"
+    },
+    optionA:{
+        presence: {
+            allowEmpty: false
         },
-        optionB:{
-            presence: {
-                allowEmpty: false
-            },
-            type : "string"
+        type : "string"
+    },
+    optionB:{
+        presence: {
+            allowEmpty: false
         },
-        optionC:{
-            presence: {
-                allowEmpty: false
-            },
-            type : "string"
+        type : "string"
+    },
+    optionC:{
+        presence: {
+            allowEmpty: false
         },
-        optionD:{
-            presence: {
-                allowEmpty: false
-            },
-            type : "string"
+        type : "string"
+    },
+    optionD:{
+        presence: {
+            allowEmpty: false
         },
-        answer:{
-            presence: {
-                allowEmpty: false
-            },
-            type : "string"
+        type : "string"
+    },
+    answer:{
+        presence: {
+            allowEmpty: false
         },
-        point:{
-            presence: {
-                allowEmpty: false
-            },
-            type : "number"
+        type : "string"
+    },
+    point:{
+        presence: {
+            allowEmpty: false
         },
-        bankId:{
-            presence: {
-                allowEmpty: false
-            },
-            type : "number"
+        type : "number"
+    },
+    bankId:{
+        presence: {
+            allowEmpty: false
         },
+        type : "number"
+    },
 
-    }
+}
+exports.AddQes = async (content)=>{
     validate.validate(content,rule)
     const resp = await QuestionItem.create(content)
-    console.log(resp.toJSON())
     return resp.toJSON()
 }
 
-exports.getAllQesBank = async ()=>{
-    return await QuestionBank.findAll({
-        attributes:["id","bankName","bankType","itemPoint"]
+exports.getQesListByBankId = async (bankId)=>{
+    return await QuestionItem.findAll({
+        where:{
+            bankId,
+        }
     })
 }
 
-exports.editQesBank = async (id,{bankName,bankType,itemPoint})=>{
-    const rule = {
-        bankName:{
-            presence: {
-                allowEmpty: false
-            },
-            type: "string"
-        },
-        bankType:{
-            presence: {
-                allowEmpty: false
-            },
-            type : "number"
-        },
-        itemPoint:{
-            presence: {
-                allowEmpty: false
-            },
-            type : "number"
-        },
-
-    }
-    validate.validate({bankName,bankType,itemPoint},rule)
-    const resp = await QuestionBank.update({
-        bankName, 
-        bankType,
-        itemPoint
-    },{
+exports.editQesItemById = async (id,content)=>{
+    validate.validate(content,rule)
+    const resp = await QuestionItem.update(content,{
         where : {
             id,
         }
@@ -100,7 +76,7 @@ exports.editQesBank = async (id,{bankName,bankType,itemPoint})=>{
 }
 
 exports.deleteQesBank = async(id)=>{
-    const resp =   await QuestionBank.destroy({
+    const resp =   await QuestionItem.destroy({
         where:{
             id
         }
@@ -109,14 +85,6 @@ exports.deleteQesBank = async(id)=>{
 }
 
 
-exports.checkQesBanKNameExist = async function ({bankName}) {
-    const resp = await QuestionBank.findAndCountAll({
-        where :{
-            bankName
-        }
-    })
-    return resp.count
-}
 
 
 
