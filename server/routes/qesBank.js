@@ -1,11 +1,8 @@
 const express = require("express")
 const router = express.Router()
 const qesBankServ = require("../services/qesBankServ")
-const {
-    asyncHandler
-} = require("../utils/getSendResult")
+const {asyncHandler} = require("../utils/getSendResult")
 const jwt = require("../middleWare/jwt")
-
 
 router.post('/', asyncHandler(async (req, res) => {
     const alreadyExist = await qesBankServ.checkQesBanKNameExist(req.body)
