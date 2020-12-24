@@ -75,7 +75,7 @@ exports.editQesItemById = async (id,content)=>{
     return resp[0] == 1 ? true : false
 }
 
-exports.deleteQesBank = async(id)=>{
+exports.deleteQesItemById = async(id)=>{
     const resp =   await QuestionItem.destroy({
         where:{
             id

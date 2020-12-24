@@ -1,9 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const qesItemServ = require("../services/qesItemServ")
-const {
-    asyncHandler
-} = require("../utils/getSendResult")
+const { asyncHandler } = require("../utils/getSendResult")
 
 
 router.post('/', asyncHandler(async (req, res) => {
