@@ -114,11 +114,9 @@ export default {
                 bankType : this.form.bankType
             })
             if(resp.code == 0){
-                this.$message({
-                    message: '新建题库成功',
-                    type: 'success'
+                this.$router.push({
+                    path : "/admin/newQesBankItem/"+resp.data.id
                 })
-                this.initBankForm()
             }else{
                  this.$message({
                     message: '新建题库失败，请更换题库名重新添加',
@@ -139,6 +137,11 @@ export default {
             this.form.itemCount = item.itemPoint
             this.showDialog = true
             this.dialogTitle = "编辑题库"
+        },
+        editQestions(id){
+            this.$router.push({
+                path : "/admin/bankItem/"+id
+            })
         },
         remove(id){
 

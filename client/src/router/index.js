@@ -22,6 +22,16 @@ const routes = [
             component: () => import('../views/QesBank.vue'),
         },
         {
+            path: 'editQesBankItem/:id',
+            name: 'editQesBankItem',
+            component: () => import('../views/editQesBankItem.vue'),
+        },
+        {
+            path: 'newQesBankItem/:id',
+            name: 'newQesBankItem',
+            component: () => import('../views/newQesBankItem.vue'),
+        },
+        {
             path: 'exam',
             name: 'exam',
             component: () => import('../views/ExamList.vue'),
