@@ -14,7 +14,7 @@ const routes = [
         path: '/admin',
         name: 'Admin',
         component: () => import('../views/Admin.vue'),
-        redirect:"/admin/qesBank",
+        redirect:"/admin/exam",
         children: [
             {
             path: 'qesBank',

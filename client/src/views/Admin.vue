@@ -5,7 +5,7 @@
                 <div class="logo">考题系统</div>
                 <div class="menu">
                     <el-menu
-                        default-active="2"
+                        default-active="1"
                         class="el-menu-vertical-demo"
                         @select="selectMenu"
                         background-color="#545c64"
