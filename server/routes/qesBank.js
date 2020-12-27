@@ -24,8 +24,10 @@ router.get('/', asyncHandler(async (req, res) => {
 }))
 
 router.put("/:id", asyncHandler(async (req, res) => {
+    console.log(req.body)
     const id = req.params.id
     const result = await qesBankServ.editQesBank(id, req.body)
+    
     result ? res.send({
         code: "0",
         msg: "success",

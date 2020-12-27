@@ -1,62 +1,71 @@
 const QuestionItem = require("../models/QuestionItem")
 const validate = require("validate.js")
-// 试题验证规则
-const rule = {
-    questionContent:{
-        presence: {
-            allowEmpty: false
-        },
-        type: "string"
-    },
-    optionA:{
-        presence: {
-            allowEmpty: false
-        },
-        type : "string"
-    },
-    optionB:{
-        presence: {
-            allowEmpty: false
-        },
-        type : "string"
-    },
-    optionC:{
-        presence: {
-            allowEmpty: false
-        },
-        type : "string"
-    },
-    optionD:{
-        presence: {
-            allowEmpty: false
-        },
-        type : "string"
-    },
-    answer:{
-        presence: {
-            allowEmpty: false
-        },
-        type : "string"
-    },
-    point:{
-        presence: {
-            allowEmpty: false
-        },
-        type : "number"
-    },
-    bankId:{
-        presence: {
-            allowEmpty: false
-        },
-        type : "number"
-    },
 
-}
+
 // 添加试题
 exports.AddQes = async (content)=>{
-    validate.validate(content,rule)
-    const resp = await QuestionItem.create(content)
-    return resp.toJSON()
+    const rule = {
+        questionContent:{
+            presence: {
+                allowEmpty: false
+            },
+            type: "string"
+        },
+        optionA:{
+            presence: {
+                allowEmpty: false
+            },
+            type : "string"
+        },
+        optionB:{
+            presence: {
+                allowEmpty: false
+            },
+            type : "string"
+        },
+        optionC:{
+            presence: {
+                allowEmpty: false
+            },
+            type : "string"
+        },
+        optionD:{
+            presence: {
+                allowEmpty: false
+            },
+            type : "string"
+        },
+        answer:{
+            presence: {
+                allowEmpty: false
+            },
+            type : "string"
+        },
+        point:{
+            presence: {
+                allowEmpty: false
+            },
+            type : "number"
+        },
+        bankId:{
+            presence: {
+                allowEmpty: false
+            },
+            type : "number"
+        },
+    
+    }
+    try {
+        validate.validate(content,rule)  
+        const resp = await QuestionItem.create(content)
+        return resp.toJSON()    
+    } catch (error) {
+        return {
+            err : error,
+        }
+    }
+    
+  
 }
 
 // 通过题库id获取试题列表

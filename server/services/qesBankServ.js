@@ -39,17 +39,18 @@ exports.getAllQesBank = async ()=>{
 }
 
 // 编辑题库
-exports.editQesBank = async (id,{bankName,bankType,itemPoint})=>{
-    validate.validate({bankName,bankType,itemPoint},rule)
+exports.editQesBank = async (id,{name,bankType,itemCount})=>{
+  
     const resp = await QuestionBank.update({
-        bankName, 
+        bankName : name, 
         bankType,
-        itemPoint
+        itemPoint : itemCount
     },{
         where : {
             id,
         }
     })
+    
     return resp[0] == 1 ? true : false
 }
 // 删除题库
