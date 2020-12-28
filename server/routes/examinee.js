@@ -8,8 +8,10 @@ router.post("/:type",asyncHandler(async (req, res)=>{
     const type = req.params.type
     if(type == "singIn"){
         // 考生报名
+        const resp =   await examineeServ.addExaminee(req.body)
     }else{
         // 登录考试 获取试题
+        const resp = await examineeServ.loginExam(req.body)
     }
 }))
 
