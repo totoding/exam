@@ -49,7 +49,7 @@
                 </el-form>
                 <span slot="footer" class="dialog-footer">
                     <el-button @click="cancel">取 消</el-button>
-                    <el-button type="primary" @click="handleNewClick"
+                    <el-button type="primary" @click="handleClick"
                         >确 定</el-button
                     >
                 </span>
@@ -71,7 +71,7 @@
                                     <el-button type="warning" size="mini" @click="editBankInfo(item)">编辑题库信息</el-button>
                                 </div> 
                                 <div style="margin-top:10px;margin-left:20px"> 
-                                    <el-button type="info" size="mini" @click="editQestions(item.id)">编辑试题信息</el-button>
+                                    <el-button type="info" size="mini" @click="editQestions(item.id,item.itemPoint)">编辑试题信息</el-button>
                                 </div>
                                 <div slot="reference">编辑</div>
                                 </el-popover>
@@ -102,29 +102,41 @@ export default {
                 itemCount : null,               
             },
             qesBankList : [],
-            formLabelWidth:'80px'
+            formLabelWidth:'80px',
+            type : "new",
+            editId : 0
         }
     },
     methods:{
-        async handleNewClick(){
+        async handleClick(){
             this.loading = true
-            const resp = await qesBank.addBank({
-                bankName : this.form.name,
-                itemPoint : this.form.itemCount,
-                bankType : this.form.bankType
-            })
-            if(resp.code == 0){
-                this.$message({
-                    message: '新建题库成功',
-                    type: 'success'
+            if(this.type == "new"){
+                const resp = await qesBank.addBank({
+                    bankName : this.form.name,
+                    itemPoint : this.form.itemCount,
+                    bankType : this.form.bankType
                 })
-                this.initBankForm()
+                if(resp.code == 0){
+                    this.$router.push({
+                        path : "/admin/QesBankItem/"+resp.data.id,
+                        params:{
+                            types : "edit"
+                        }
+                    })
+                }else{
+                    this.$message({
+                        message: '新建题库失败，请更换题库名重新添加',
+                        type: 'warning'
+                    })
+                }
             }else{
-                 this.$message({
-                    message: '新建题库失败，请更换题库名重新添加',
-                    type: 'warning'
-                })
+                const resp = await qesBank.editBankByBankId(this.editId,this.form)
+                if(resp.code == 0){
+                    alert("编辑成功")
+                    this.initBankForm()
+                }
             }
+           
         },
         async getQesList(){ 
             const resp = await qesBank.getBankList()
@@ -139,9 +151,25 @@ export default {
             this.form.itemCount = item.itemPoint
             this.showDialog = true
             this.dialogTitle = "编辑题库"
+            this.type = "edit"
+            this.editId = item.id
+            console.log(item)
         },
-        remove(id){
-
+        editQestions(id,point){
+            this.$router.push({
+                path : "/admin/QesBankItem/"+id,
+                query:{
+                    types : "edit",
+                    point
+                }
+            })
+        },
+        async remove(id){
+            const resp = await qesBank.removeBankByBankId(id)
+            if(resp.code == '0'){
+                alert("删除成功")
+                this.getQesList()
+            }
         },
         initBankForm(){
             this.form.name = ""
@@ -150,6 +178,8 @@ export default {
             this.dialogTitle = "新建题库"
             this.showDialog = false
             this.getQesList()
+            this.type = "new"
+            this.editId = 0
         },
         cancel(){
             this.initBankForm()

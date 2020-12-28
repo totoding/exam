@@ -14,12 +14,17 @@ const routes = [
         path: '/admin',
         name: 'Admin',
         component: () => import('../views/Admin.vue'),
-        redirect:"/admin/qesBank",
+        redirect:"/admin/exam",
         children: [
             {
             path: 'qesBank',
             name: 'qesBank',
             component: () => import('../views/QesBank.vue'),
+        },
+        {
+            path: 'QesBankItem/:id',
+            name: 'QesBankItem',
+            component: () => import('../views/QesBankItem.vue'),
         },
         {
             path: 'exam',

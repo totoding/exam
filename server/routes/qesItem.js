@@ -5,22 +5,16 @@ const { asyncHandler } = require("../utils/getSendResult")
 
 
 router.post('/', asyncHandler(async (req, res) => {
-    const newQesList = req.body
-    if(newQesList.length > 1){
-        const proms = [] 
-        newQesList.forEach(  ele => {
-            const res = qesItemServ.AddQes(ele)
-            proms.push(res)
-        });
-        const result = Promise.all(proms)
-        return result
-    }else{
+    const resp = await qesItemServ.AddQes(req.body)
+    if(resp.err){
         res.send({
-            code: "-1",
-            msg: "请添加试题",
-            data: {}
+            code : "-1",
+            msg : "failed",
+            data : resp.err
         })
-    }
+    }else{
+        return resp
+    }    
 }))
 
 router.get('/:bankId', asyncHandler(async (req, res) => {
