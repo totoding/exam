@@ -1,7 +1,7 @@
 const sequelize = require("./db")
 const { DataTypes } = require("sequelize")
 
-const Paper = sequelize.define("Paper", {
+const Paper = sequelize.define("Exam", {
     paperName: {
         type: DataTypes.STRING(255),
         allowNull: false,
@@ -10,13 +10,21 @@ const Paper = sequelize.define("Paper", {
         type: DataTypes.STRING(255),
         allowNull: false,
     },
-    Duration:{
+    duration:{
         type: DataTypes.STRING(255),
         allowNull: false,
     },
     totalScore: {
         type: DataTypes.INTEGER(11),
         allowNull: false,
+    },
+    isStart : {
+        type : DataTypes.INTEGER(11),
+        allowNull : false
+    },
+    signUp : {
+        type : DataTypes.INTEGER(11),
+        allowNull : false
     },
     bankInfo :  {
         type: DataTypes.STRING(255),

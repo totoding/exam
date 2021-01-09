@@ -1,4 +1,4 @@
-const Paper = require("../models/Paper")
+const Exam = require("../models/Exam.js")
 const validate = require("validate.js")
 const { async } = require("validate.js")
 
@@ -36,8 +36,8 @@ const rule = {
     }
 }
 // 检查重名
-exports.checkPaperNameExist = async ({paperName})=>{
-    const resp = await Paper.findAndCountAll({
+exports.checkExamNameExist = async ({paperName})=>{
+    const resp = await Exam.findAndCountAll({
         where:{
             paperName
         }
@@ -46,9 +46,35 @@ exports.checkPaperNameExist = async ({paperName})=>{
 }
 
 // 添加考试
-exports.addPaper = async (payload)=>{
+exports.addExam = async (payload)=>{
     validate.validate(payload,rule)
-    const resp = await Paper.create(payload)
+    payload.signUp = 0
+    payload.isStart = 0
+    const resp = await Exam.create(payload)
     return resp.toJSON()
 }
 
+exports.getExamList = async ()=>{
+    const resp = await Exam.findAll()
+    return resp
+}
+
+exports.examStart = async(id)=>{
+    const resp = await Exam.update({
+        isStart :  1,
+    },{
+        where:{
+            id,
+        }
+    })
+    return resp[0] == 1 ? true : false
+}
+
+exports.examStop = async(id)=>{
+    const resp = await Exam.destroy({
+        where : {
+            id
+        }
+    })
+    return resp
+}

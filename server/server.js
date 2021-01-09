@@ -12,7 +12,7 @@ app.use("/api/whoami",require("./routes/whoami"))
 
 app.use("/api/qesBank", require("./routes/qesBank"))
 app.use("/api/qesItem", require("./routes/qesItem"))
-app.use("/api/paper", require("./routes/paper"))
+app.use("/api/exam", require("./routes/exam"))
 app.use("/api/examinee", require("./routes/examinee"))
 
 
