@@ -11,27 +11,32 @@ const routes = [
         component: Home
     },
     {
+        path: '/sign',
+        name: 'Sign',
+        component: () => import('../views/Sign.vue'),
+    },
+    {
         path: '/admin',
         name: 'Admin',
         component: () => import('../views/Admin.vue'),
-        redirect:"/admin/exam",
+        redirect: "/admin/exam",
         children: [
             {
-            path: 'qesBank',
-            name: 'qesBank',
-            component: () => import('../views/QesBank.vue'),
-        },
-        {
-            path: 'QesBankItem/:id',
-            name: 'QesBankItem',
-            component: () => import('../views/QesBankItem.vue'),
-        },
-        {
-            path: 'exam',
-            name: 'exam',
-            component: () => import('../views/ExamList.vue'),
-        },
-    ]
+                path: 'qesBank',
+                name: 'qesBank',
+                component: () => import('../views/QesBank.vue'),
+            },
+            {
+                path: 'QesBankItem/:id',
+                name: 'QesBankItem',
+                component: () => import('../views/QesBankItem.vue'),
+            },
+            {
+                path: 'exam',
+                name: 'exam',
+                component: () => import('../views/ExamList.vue'),
+            },
+        ]
     }
 ]
 
@@ -40,5 +45,15 @@ const router = new VueRouter({
     base: process.env.BASE_URL,
     routes
 })
-
+router.beforeEach((to, from, next) => {
+    if (to.path === "/") {
+        if (localStorage.getItem("token")) {//说明用户已经登录了
+            next()
+        } else {
+            next("/sign") //如果用户没有登录直接跳转到登录界面进行用户登录
+        }
+    } else {
+        next()
+    }
+})
 export default router

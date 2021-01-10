@@ -14,7 +14,7 @@ export default ()=>{
     instance.interceptors.response.use(
         (res)=>{
             if(res.headers.authorization){
-                localStorage.setItem("tokne", res.headers.authorization)
+                localStorage.setItem("token", res.headers.authorization)
             }
             return res
         },
