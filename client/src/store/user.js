@@ -24,7 +24,7 @@ export default {
     },
     logout({ commit }) {
       commit("setData", null);
-      signIn.logout();
+      sign.logout();
     },
     async whoAmI({ commit }) {
       commit("setIsLoading", true);

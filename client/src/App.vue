@@ -8,7 +8,7 @@ export default {
     created() {
         this.$store.dispatch("user/whoAmI").then((res) => {
             console.log(res);
-        });
+        })
     },
 };
 </script>

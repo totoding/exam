@@ -6,9 +6,16 @@ const { asyncHandler } = require("../utils/getSendResult")
 
 router.post("/:type",asyncHandler(async (req, res)=>{
     const type = req.params.type
+    req.body.userId = req.userId
     if(type == "singIn"){
         // 考生报名
-        const resp =   await examineeServ.addExaminee(req.body)
+        const resp = await examineeServ.addExaminee(req.body)
+        return resp ? resp : res.send({
+            code : "-1",
+            data : {},
+            msg : "重复报名"
+        })
+       
     }else{
         // 登录考试 获取试题
         const resp = await examineeServ.loginExam(req.body)

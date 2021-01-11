@@ -11,7 +11,7 @@ const Examinee = sequelize.define("Examinee", {
         allowNull : false,
     },
     identityCard: {
-        type: DataTypes.INTEGER(11),
+        type: DataTypes.STRING(255),
         allowNull: false,
     },
     examId:{

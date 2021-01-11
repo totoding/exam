@@ -6,9 +6,11 @@ const { async } = require("validate.js")
 
 // 报名
 exports.addExaminee = async(payload)=>{
-    const allowAdd =  await checkExamineeexist()
-    if(allowAdd){
-        payload.identityCard = createIdentityCard
+    const allowAdd =  await checkExamineeExist(payload.userId, payload.examId)
+    if(!allowAdd){
+        payload.identityCard = await createIdentityCard(payload.userId, payload.examId)
+        payload.paperLog = "",
+        payload.score = null
         const result = await Examinee.create(payload)
         return result.toJSON()
     }else{
@@ -38,17 +40,19 @@ async function createIdentityCard(userId, ExamId){
     }else{
         examineeId = (Array(4).join(0) + 1).slice(-4)
     }
-    const fullExamId =  (Array(4).join(0) + 2).slice(-4)
+    const fullExamId =  (Array(4).join(0) + ExamId).slice(-4)
     const year = new Date().getFullYear()
     const identityCard = year + fullExamId + examineeId
     return identityCard  
 }
 
-async function checkExamineeexist(userId){
+async function checkExamineeExist(userId,examId){
     const result = await Examinee.findOne({
         where : {
             userId,
+            examId
         }
     })
+    console.log(userId , result)
     return result ? true : false
 }

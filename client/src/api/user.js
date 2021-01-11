@@ -14,3 +14,7 @@ export async function whoAmI(){
     const resp = await request().get("/api/sign")
     return resp.data
 }
+
+export async function logout(){
+    localStorage.removeItem("token")
+}
