@@ -59,6 +59,9 @@ exports.getExamList = async ()=>{
     return resp
 }
 
+
+
+
 exports.examStart = async(id)=>{
     const resp = await Exam.update({
         isStart :  1,
