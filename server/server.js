@@ -10,9 +10,10 @@ app.use(require("./middleWare/tokenMiddleWare"))
 
 app.use("/api/whoami",require("./routes/whoami"))
 
+app.use("/api/sign", require("./routes/sign"))
 app.use("/api/qesBank", require("./routes/qesBank"))
 app.use("/api/qesItem", require("./routes/qesItem"))
-app.use("/api/paper", require("./routes/paper"))
+app.use("/api/exam", require("./routes/exam"))
 app.use("/api/examinee", require("./routes/examinee"))
 
 

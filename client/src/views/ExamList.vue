@@ -5,24 +5,38 @@
                 创建考试
             </div>
             <div class="block">
-                <CreatEaxm/>
+                <CreatEaxm @initList="initList"/>
             </div>
         </div>
-        <div class="examing"></div>
+        <div class="examing">
+             <div class="title">
+                已创建考试
+            </div>
+            <div class="block">
+                <ExamList ref="list"/>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
-import CreatEaxm from '@/components/CreatExam';
+import CreatEaxm from '@/components/CreatExam'
+import ExamList from '@/components/ExamList'
 
 export default {
     name: "exam",
     components:{
         CreatEaxm,
+        ExamList
     },
     data() {
         return {}
     },
+    methods : {
+        initList(){
+            this.$refs.list.getEaxmListData()
+        }
+    }
 };
 </script>
 
