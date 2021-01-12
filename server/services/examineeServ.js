@@ -1,4 +1,5 @@
 const Examinee = require("../models/Examinee")
+const Exam = require("../models/Exam")
 const QuestionItem = require("../models/QuestionItem")
 const md5 = require("md5")
 const validate = require("validate.js")
@@ -20,7 +21,14 @@ exports.addExaminee = async(payload)=>{
 
 // 进入考试 获取试题
 exports.loginExam = async ({userId, realName,identityCard, examId})=>{
-    const paperId = await Examinee.findOne({
+    console.log(
+        userId,
+        realName,
+        identityCard,
+        examId
+    )
+    const resp = await Examinee.findOne({
+        include : [Exam],
         where:{
             userId,
             realName,
@@ -28,19 +36,37 @@ exports.loginExam = async ({userId, realName,identityCard, examId})=>{
             examId
         }
     })
+    console.log(resp.Exam.bankInfo)
     // const paperInfo = 
 }
 
+// 获取以报名
+exports.getSignedExamByUserId = async (userId)=>{
+    const resp = await Examinee.findAll({
+        // attributes :[ "examId" ],
+        include : [Exam],
+        where:{
+            userId
+        }
+    })
+    return resp
+
+}
+
 // 创建准考证号
-async function createIdentityCard(userId, ExamId){ 
+async function createIdentityCard(userId, examId){ 
     let examineeId = ""
-    const id = await Examinee.max("id")
+    const id = await Examinee.max({
+        where : {
+            examId
+        }
+    })
     if(id){
         examineeId = (Array(4).join(0) + (id + 1)).slice(-4)
     }else{
         examineeId = (Array(4).join(0) + 1).slice(-4)
     }
-    const fullExamId =  (Array(4).join(0) + ExamId).slice(-4)
+    const fullExamId =  (Array(4).join(0) + examId).slice(-4)
     const year = new Date().getFullYear()
     const identityCard = year + fullExamId + examineeId
     return identityCard  

@@ -21,6 +21,11 @@ const routes = [
         component: () => import('../views/SignExam.vue'),
     },
     {
+        path: '/loginExam',
+        name: 'loginExam',
+        component: () => import('../views/LoginExam.vue'),
+    },
+    {
         path: '/admin',
         name: 'Admin',
         component: () => import('../views/Admin.vue'),

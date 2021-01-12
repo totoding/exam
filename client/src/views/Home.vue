@@ -11,8 +11,11 @@
                 </el-card>
             </div>
             <div class="right_exam common_layout">
-                <el-card style="width : 80%; height : 400px; margin-top:-20%" @click="entrollExam">
-                    进入考试
+                <el-card style="width : 80%; height : 400px; margin-top:-20%" >
+                    <span @click="entrollExam">
+                        进入考试
+                    </span>
+                    
                 </el-card>
             </div>
         </div>
@@ -32,13 +35,15 @@ export default {
     },
     methods :{
         singExam(){
-            console.log('1')
+            
             this.$router.push({
                 path : "/signExam"
             })
         },
         entrollExam(){
-
+            this.$router.push({
+                path  : "/loginExam"
+            })
         }
     }
 }

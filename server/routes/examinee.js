@@ -18,8 +18,15 @@ router.post("/:type",asyncHandler(async (req, res)=>{
        
     }else{
         // 登录考试 获取试题
+        req.body.userId = req.userId
         const resp = await examineeServ.loginExam(req.body)
     }
 }))
+
+router.get("/",asyncHandler(async (req, res)=>{
+    const resp = await examineeServ.getSignedExamByUserId(req.userId)
+    return resp
+}))
+
 
 module.exports = router

@@ -4,6 +4,8 @@ const jwt = require("./jwt");
 const needTokenApi = [
     { method: "GET", path: "/api/sign" },
     { method: "POST", path: "/api/examinee/singIn" },
+    { method: "POST", path: "/api/examinee/login" },
+    { method: "GET", path: "/api/examinee" },
 ];
 
 // 用于解析token
