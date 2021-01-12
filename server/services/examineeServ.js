@@ -5,6 +5,7 @@ const QuestionItem = require("../models/QuestionItem")
 const md5 = require("md5")
 const validate = require("validate.js")
 const { async } = require("validate.js")
+const { where } = require("sequelize/types")
 
 // 报名
 exports.addExaminee = async(payload)=>{
@@ -14,6 +15,16 @@ exports.addExaminee = async(payload)=>{
         payload.paperLog = "",
         payload.score = null
         const result = await Examinee.create(payload)
+        Exam.update(
+            {
+                signIn :  sequelize.literal('signIn+1')
+            },
+            {
+                where :{
+                    id : payload.examId
+                }
+            }
+        )
         return result.toJSON()
     }else{
         return false
@@ -58,7 +69,7 @@ exports.getSignedExamByUserId = async (userId)=>{
 }
 
 // 创建准考证号
-async function createIdentityCard(userId, examId){ 
+async function createIdentityCard(examId){ 
     let examineeId = ""
     const id = await Examinee.max({
         where : {
@@ -74,7 +85,9 @@ async function createIdentityCard(userId, examId){
     const year = new Date().getFullYear()
     const identityCard = year + fullExamId + examineeId
     return identityCard  
+  
 }
+
 
 async function checkExamineeExist(userId,examId){
     const result = await Examinee.findOne({

@@ -1,7 +1,6 @@
 const User = require("../models/User")
 const md5 = require("md5")
 const validate = require("validate.js")
-const { username } = require("../models/config")
 
 exports.addUser = async ({username,password})=>{
     const rule = {
@@ -24,7 +23,6 @@ exports.addUser = async ({username,password})=>{
 }
 
 exports.login = async function (userInfo) {
-    console.log(userInfo)
     let pwd = md5(userInfo.password)
     const result = await User.findOne({
         where: {

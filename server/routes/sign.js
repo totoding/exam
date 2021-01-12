@@ -30,7 +30,6 @@ router.post("/:type", asyncHandler(async (req, res) => {
 }))
 
 router.get("/", asyncHandler(async(req, res)=>{
-    console.log(req.userId)
     const resp = await userServ.getUserById(req.userId)
     return resp
 }))
