@@ -1,3 +1,4 @@
+const sequelize = require("../models/db")
 const Examinee = require("../models/Examinee")
 const Exam = require("../models/Exam")
 const QuestionItem = require("../models/QuestionItem")
@@ -21,24 +22,28 @@ exports.addExaminee = async(payload)=>{
 
 // 进入考试 获取试题
 exports.loginExam = async ({userId, realName,identityCard, examId})=>{
-    console.log(
-        userId,
-        realName,
-        identityCard,
-        examId
-    )
     const resp = await Examinee.findOne({
         include : [Exam],
         where:{
             userId,
             realName,
             identityCard,
-            examId
+            examId,
         }
     })
-    console.log(resp.Exam.bankInfo)
-    // const paperInfo = 
+    const bankInfo = JSON.parse(resp.Exam.bankInfo)
+    const porms = []
+    bankInfo.forEach(ele=>{
+        const resp =  QuestionItem.findAll({
+            limit : ele.qesCount,
+            order: sequelize.random()
+        })
+        porms.push(resp)
+    })
+    const arr = await Promise.all([...porms])
+    return arr
 }
+
 
 // 获取以报名
 exports.getSignedExamByUserId = async (userId)=>{
@@ -50,7 +55,6 @@ exports.getSignedExamByUserId = async (userId)=>{
         }
     })
     return resp
-
 }
 
 // 创建准考证号
@@ -79,6 +83,5 @@ async function checkExamineeExist(userId,examId){
             examId
         }
     })
-    console.log(userId , result)
     return result ? true : false
 }
