@@ -158,7 +158,6 @@ export default {
     width: 100%;
     height: 100%;
     display: flex;
-   
     .left_qes {
         width: 40%;
         height: 100%;

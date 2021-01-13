@@ -2,10 +2,7 @@ const sequelize = require("../models/db")
 const Examinee = require("../models/Examinee")
 const Exam = require("../models/Exam")
 const QuestionItem = require("../models/QuestionItem")
-const md5 = require("md5")
-const validate = require("validate.js")
-const { async } = require("validate.js")
-const { where } = require("sequelize/types")
+
 
 // 报名
 exports.addExaminee = async(payload)=>{
